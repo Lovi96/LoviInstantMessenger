@@ -23,6 +23,10 @@ public class Server extends JFrame {
 	private String actualUserName;
 	private JLabel userNameLabel;
 	private JButton userNameSetter;
+	private JScrollPane scrollPane;
+	private JPanel panel1;
+	private JPanel panel2;
+	private Container contentPane;
 
 	public Server() {
 		super("Lovi's Instant Messenger");
@@ -47,9 +51,9 @@ public class Server extends JFrame {
 				setUserName(userNameField.getText());
 			}
 		});
-		userNameField = new JTextField("Username");
+		userNameField = new JTextField("Enter username");
 		userNameField.setEditable(true);
-		userNameLabel = new JLabel("Client");
+		userNameLabel = new JLabel("Current username: Client");
 		userNameField.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -58,11 +62,29 @@ public class Server extends JFrame {
 
 			}
 		});
-		add(new JScrollPane(chatWindow),BorderLayout.CENTER);
-		add(userText,BorderLayout.SOUTH);
-		add(userNameField,BorderLayout.NORTH);
-		add(userNameLabel,BorderLayout.AFTER_LINE_ENDS);
-		add(userNameSetter,BorderLayout.AFTER_LINE_ENDS);
+		scrollPane = new JScrollPane(chatWindow);
+		scrollPane.setPreferredSize(new Dimension(250,160));
+		scrollPane.setAlignmentX(LEFT_ALIGNMENT);
+		panel1 = new JPanel();
+		panel1.setLayout(new BoxLayout(panel1,BoxLayout.PAGE_AXIS));
+		panel1.add(Box.createRigidArea(new Dimension(0,5)));
+		panel1.add(userNameLabel);
+		panel1.add(Box.createRigidArea(new Dimension(0,5)));
+		panel1.add(scrollPane);
+		//panel1.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		//panel1.add(Box.createRigidArea(new Dimension(0,5)));
+		panel1.add(userText);
+		panel2 = new JPanel();
+		panel2.setLayout(new BoxLayout(panel2,BoxLayout.LINE_AXIS));
+		panel2.add(userNameField);
+		userNameField.setFocusable(true);
+		userNameField.setRequestFocusEnabled(true);
+		userNameField.requestFocus();
+		panel2.add(userNameSetter);
+		contentPane = getContentPane();
+		contentPane.add(panel2,BorderLayout.NORTH);
+		contentPane.add(panel1,BorderLayout.CENTER);
+		//add(contentPane);
 		setSize(600, 300);
 		setVisible(true);
 	}
@@ -167,7 +189,7 @@ public class Server extends JFrame {
 			@Override
 			public void run() {
 				actualUserName = actionCommand;
-				userNameLabel.setText(actualUserName);
+				userNameLabel.setText("Current username: "+actualUserName);
 
 			}
 		});
