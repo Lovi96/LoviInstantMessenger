@@ -20,7 +20,7 @@ public class Server extends JFrame {
 	private ServerSocket server;
 	private Socket connection;
 	private JTextField userNameField;
-	private String actualUserName;
+	private String actualUserName = "Server";
 	private JLabel userNameLabel;
 	private JButton userNameSetter;
 	private JScrollPane scrollPane;
@@ -53,7 +53,7 @@ public class Server extends JFrame {
 		});
 		userNameField = new JTextField("Enter username");
 		userNameField.setEditable(true);
-		userNameLabel = new JLabel("Current username: Client");
+		userNameLabel = new JLabel("Current username: Server");
 		userNameField.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -152,6 +152,7 @@ public class Server extends JFrame {
 			output.close();
 			input.close();
 			connection.close();
+			userNameField.setEditable(true);
 			setButtonVisible(true);
 		} catch(IOException ioe) {
 			ioe.printStackTrace();
